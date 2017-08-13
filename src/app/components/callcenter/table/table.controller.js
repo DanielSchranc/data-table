@@ -1,15 +1,21 @@
-function CallcenterTableController(CallcenterService) {
+function CallcenterTableController(CallcenterService, StorageService) {
   var ctrl = this;
+  ctrl.data = [];
 
-  ctrl.data = null;
-
-  CallcenterService.getEmergencyCalls()
-    .then(function(response) {
-      ctrl.data = response;
-      console.log('hello', response);
-    }, function(reason) {
-      console.log('reason', reason);
-    });
+  if (navigator.onLine) {
+    CallcenterService
+      .getEmergencyCalls()
+      .then(function(response) {
+        ctrl.data = response;
+        if (!StorageService.getAll().length) {
+          StorageService.add(ctrl.data);
+        }
+      }, function(reason) {
+        console.error('Error CallcenterService:', reason);
+      });
+  } else {
+    ctrl.data = StorageService.getAll();
+  }
 
 };
 

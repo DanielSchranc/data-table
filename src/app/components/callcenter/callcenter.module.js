@@ -1,5 +1,7 @@
 angular
-  .module('components.callcenter', [])
+  .module('components.callcenter', [
+    'ngStorage'
+  ])
   .constant('CONFIG', {
     API: {
       CALLS: 'https://data.gov.sk/api/3/action/datastore_search'

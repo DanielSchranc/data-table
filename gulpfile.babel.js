@@ -24,7 +24,8 @@ const paths = {
   styles: `${root}/sass/*.scss`,
   templates: `${root}/app/**/*.html`,
   modules: [
-    'angular/angular.js'
+    'angular/angular.js',
+    'ngstorage/ngStorage.js'
   ],
   static: [
     `${root}/index.html`,
