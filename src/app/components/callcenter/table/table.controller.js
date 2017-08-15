@@ -1,11 +1,11 @@
-function CallcenterTableController(CallcenterService, StorageService) {
+function CallcenterTableController(CallcenterService, StorageService, MapDataService) {
   var ctrl = this;
-  ctrl.data = [];
+  ctrl.CallsData = [];
 
   function storeCallcenterData(response) {
-    ctrl.data = response;
+    ctrl.CallsData = response;
     if (!StorageService.getAll().length) {
-      StorageService.add(ctrl.data);
+      StorageService.add(ctrl.CallsData);
     }
   }
 
@@ -19,7 +19,7 @@ function CallcenterTableController(CallcenterService, StorageService) {
     if (navigator.onLine) {
       getCallcenterData();
     } else {
-      ctrl.data = StorageService.getAll();
+      ctrl.CallsData = StorageService.getAll();
     }
   }
 

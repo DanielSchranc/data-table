@@ -1,3 +1,15 @@
-<div class="call-center-table">
-  {{$ctrl.data}}
+<div class="calls-table">
+  <ul class="calls-table__list">
+    <li ng-repeat="item in $ctrl.CallsData">
+      <ul class="calls-table__list--data">
+        <li>City: <span>{{item.Callcentername}}</span></li>
+        <li>Month: <span>{{item.mesiac}}</span></li>
+        <li>identified: <span>{{item.Identifikovane}}</span></li>
+        <li>notIdentified: <span>{{item.Neidentifikovane}}</span></li>
+        <li>all: <span>{{item.Vsetky}}</span></li>
+        <li>answered: <span>{{item.Zdvihnute}}</span></li>
+        <li>justified: <span>{{item.Opravnene}}</span></li>
+      </ul>
+    </li>
+  </ul>
 </div>

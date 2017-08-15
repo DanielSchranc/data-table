@@ -1,3 +1,71 @@
+$black: #111;
+$aqua: #7FDBFF;
+$teal: #39CCCC;
+$lime: #01FF70;
+$olive: #3D9970;
+$red: #FF4136;
+$orange: #FF851B;
+$yellow: #FFDC00;
+$fuchsia: #F012BE;
+
 body {
-  background: white;
+  margin: 0
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.calls-table {
+  background: $black;
+}
+
+.calls-table__list {
+  display: flex;
+  flex-direction: column;
+  &>li {
+    padding: 1em;
+    color: $aqua;
+    &:nth-child(8n) {
+      border-bottom: 1px solid $olive;
+    }
+    // &:nth-child(1) {
+    //   color: $aqua;
+    // }
+    // &:nth-child(2) {
+    //   color: $teal;
+    // }
+    // &:nth-child(3) {
+    //   color: $lime;
+    // }
+    // &:nth-child(4) {
+    //   color: $olive;
+    // }
+    // &:nth-child(5) {
+    //   color: $red;
+    // }
+    // &:nth-child(6) {
+    //   color: $orange;
+    // }
+    // &:nth-child(7) {
+    //   color: $yellow;
+    // }
+    // &:nth-child(8) {
+    //   color: $fuchsia;
+    // }
+  }
+}
+
+.calls-table__list--data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  &>li {
+    span {
+      color: $lime;
+    }
+  }
 }
