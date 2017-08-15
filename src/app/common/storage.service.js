@@ -28,5 +28,5 @@ function StorageService($localStorage) {
   };
 }
 angular
-  .module('components.callcenter')
+  .module('common')
   .factory('StorageService', StorageService);

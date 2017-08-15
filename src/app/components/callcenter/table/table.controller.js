@@ -1,4 +1,4 @@
-function CallcenterTableController(CallcenterService, StorageService, MapDataService) {
+function CallcenterTableController(CallcenterAPIService, StorageService) {
   var ctrl = this;
   ctrl.CallsData = [];
 
@@ -10,7 +10,7 @@ function CallcenterTableController(CallcenterService, StorageService, MapDataSer
   }
 
   function getCallcenterData() {
-    CallcenterService
+    CallcenterAPIService
       .getEmergencyCalls()
       .then(storeCallcenterData);
   }
