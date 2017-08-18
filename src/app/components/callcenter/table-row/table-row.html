@@ -1,10 +1,31 @@
-<ul ng-repeat="item in $ctrl.cities" 
+<ul class="calls-table__list--data">
+	<li>City:</li>
+	<li>Month:</li>
+	<li>Identified:</li>
+	<li>Not Identified:</li>
+	<li>All:</li>
+	<li>Answered: </li>
+	<li>Justified:</li>
+</ul>
+<ul ng-repeat="item in $ctrl.cities | filter as filtered" 
     class="calls-table__list--data">
-  <li>City: <span>{{item.Callcentername}}</span></li>
-  <li>Month: <span>{{item.mesiac}}</span></li>
-  <li>identified: <span>{{item.Identifikovane}}</span></li>
-  <li>notIdentified: <span>{{item.Neidentifikovane}}</span></li>
-  <li>all: <span>{{item.Vsetky}}</span></li>
-  <li>answered: <span>{{item.Zdvihnute}}</span></li>
-  <li>justified: <span>{{item.Opravnene}}</span></li>
+  <li><span>{{item.Callcentername}}</span></li>
+  <li><span>{{item.mesiac}}</span></li>
+  <li><span>{{item.Identifikovane}}</span></li>
+  <li><span>{{item.Neidentifikovane}}</span></li>
+  <li><span>{{item.Vsetky}}</span></li>
+  <li><span>{{item.Zdvihnute}}</span></li>
+  <li><span>{{item.Opravnene}}</span></li>
+  <ul>
+  	<li></li>
+  </ul>
+</ul>
+<ul class="calls-table__list--total">
+	<li>Total per year:</li>
+	<li>&nbsp;</li>
+	<li>{{$ctrl.getTotal(filtered, 'Identifikovane')}}</li>
+	<li>{{$ctrl.getTotal(filtered, 'Neidentifikovane')}}</li>
+	<li>{{$ctrl.getTotal(filtered, 'Vsetky')}}</li>
+	<li>{{$ctrl.getTotal(filtered, 'Zdvihnute')}}</li>
+	<li>{{$ctrl.getTotal(filtered, 'Opravnene')}}</li>
 </ul>
