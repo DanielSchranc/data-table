@@ -142,55 +142,6 @@ angular
 'use strict';
 CallcenterService.$inject = ["CallcenterAPIService"];
 function CallcenterService(CallcenterAPIService) {
-  // ctrl.calls = [{
-  //   city: 'Bratislava',
-  //   months: {
-  //     total: {
-  //       identified: 86913,
-  //       notIdentified: 22846,
-  //       all: 11159,
-  //       answered: 140042,
-  //       justified: 68363
-  //     },
-  //     january: {
-  //       identified: 8913,
-  //       notIdentified: 2246,
-  //       all: 11159,
-  //       answered: 10042,
-  //       justified: 6363
-  //     },
-  //     february: {
-  //       //...
-  //     }
-  //   }
-  // },
-  // {
-  //   city: Banska Bystrica,
-  //   months: {
-  //     total: {
-  //       identified: 86913,
-  //       notIdentified: 22846,
-  //       all: 11159,
-  //       answered: 140042,
-  //       justified: 68363
-  //     },
-  //     january: {
-  //       identified: 8913,
-  //       notIdentified: 2246,
-  //       all: 11159,
-  //       answered: 10042,
-  //       justified: 6363
-  //     },
-  //     february: {
-  //       //...
-  //     }
-  //   }
-  // }];
-  var records = [];
-  var itemModel = {
-    city: '',
-    months: []
-  }
 
   var identifiers = [
     { id: 'Banská Bystrica' },
@@ -219,18 +170,8 @@ function CallcenterService(CallcenterAPIService) {
     return CallcenterAPIService
       .getEmergencyCalls()
       .then(function(response) {
-        // returns new array of arrays for each city
+        // Returns new array of arrays for each city
         return getFilteredArray(response, identifiers);
-      })
-      .then(function(response) {
-        // array mapping to the object used in UI
-        response.forEach(function(record) {
-          record.forEach(function(callcenter) {
-            Object.assign(itemModel, callcenter);
-            console.log('hello', itemModel);
-          });
-        });
-        console.log('hello', response);
       });
   }
 
@@ -255,15 +196,11 @@ angular
   .component('callcenterTable', callcenterTable);}(window.angular));
 (function(angular){
 'use strict';
-CallcenterTableController.$inject = ["CallcenterAPIService", "StorageService", "CallcenterService"];
-function CallcenterTableController(CallcenterAPIService, StorageService, CallcenterService) {
+CallcenterTableController.$inject = ["StorageService", "CallcenterService"];
+function CallcenterTableController(StorageService, CallcenterService) {
   var ctrl = this;
   ctrl.CallsData = [];
-  CallcenterService
-    .getData()
-    .then(function(response) {
-      console.log('ctrl', response);
-    });
+
   function storeCallcenterData(response) {
     ctrl.CallsData = response;
     if (!StorageService.getAll().length) {
@@ -272,9 +209,9 @@ function CallcenterTableController(CallcenterAPIService, StorageService, Callcen
   }
 
   function getCallcenterData() {
-    CallcenterAPIService
-      .getEmergencyCalls()
-      .then(storeCallcenterData);
+    CallcenterService
+    .getData()
+    .then(storeCallcenterData);
   }
 
   function getCallcenterDataFromStorage() {
@@ -295,6 +232,31 @@ angular
 }(window.angular));
 (function(angular){
 'use strict';
+var callcenterTableRow = {
+  bindings: {
+    cities: '<'
+  },
+  templateUrl: './table-row.html',
+  controller: 'CallcenterTableRowController'
+};
+
+angular
+  .module('components.callcenter')
+  .component('callcenterTableRow', callcenterTableRow);}(window.angular));
+(function(angular){
+'use strict';
+function CallcenterTableRowController() {
+  var ctrl = this;
+
+};
+
+angular
+  .module('components.callcenter')
+  .controller('CallcenterTableRowController', CallcenterTableRowController);
+}(window.angular));
+(function(angular){
+'use strict';
 angular.module('templates', []).run(['$templateCache', function($templateCache) {$templateCache.put('./root.html','<div class="root"><callcenter-table></callcenter-table></div>');
-$templateCache.put('./table.html','<div class="calls-table"><ul class="calls-table__list"><li ng-repeat="item in $ctrl.CallsData"><ul class="calls-table__list--data"><li>City: <span>{{item.Callcentername}}</span></li><li>Month: <span>{{item.mesiac}}</span></li><li>identified: <span>{{item.Identifikovane}}</span></li><li>notIdentified: <span>{{item.Neidentifikovane}}</span></li><li>all: <span>{{item.Vsetky}}</span></li><li>answered: <span>{{item.Zdvihnute}}</span></li><li>justified: <span>{{item.Opravnene}}</span></li></ul></li></ul></div>');}]);}(window.angular));
+$templateCache.put('./table.html','<div class="calls-table"><ul class="calls-table__list"><li ng-repeat="cities in $ctrl.CallsData"><callcenter-table-row cities="cities"></callcenter-table-row></li></ul></div>');
+$templateCache.put('./table-row.html','<ul ng-repeat="item in $ctrl.cities" class="calls-table__list--data"><li>City: <span>{{item.Callcentername}}</span></li><li>Month: <span>{{item.mesiac}}</span></li><li>identified: <span>{{item.Identifikovane}}</span></li><li>notIdentified: <span>{{item.Neidentifikovane}}</span></li><li>all: <span>{{item.Vsetky}}</span></li><li>answered: <span>{{item.Zdvihnute}}</span></li><li>justified: <span>{{item.Opravnene}}</span></li></ul>');}]);}(window.angular));
 //# sourceMappingURL=bundle.js.map

@@ -1,53 +1,4 @@
 function CallcenterService(CallcenterAPIService) {
-  // ctrl.calls = [{
-  //   city: 'Bratislava',
-  //   months: {
-  //     total: {
-  //       identified: 86913,
-  //       notIdentified: 22846,
-  //       all: 11159,
-  //       answered: 140042,
-  //       justified: 68363
-  //     },
-  //     january: {
-  //       identified: 8913,
-  //       notIdentified: 2246,
-  //       all: 11159,
-  //       answered: 10042,
-  //       justified: 6363
-  //     },
-  //     february: {
-  //       //...
-  //     }
-  //   }
-  // },
-  // {
-  //   city: Banska Bystrica,
-  //   months: {
-  //     total: {
-  //       identified: 86913,
-  //       notIdentified: 22846,
-  //       all: 11159,
-  //       answered: 140042,
-  //       justified: 68363
-  //     },
-  //     january: {
-  //       identified: 8913,
-  //       notIdentified: 2246,
-  //       all: 11159,
-  //       answered: 10042,
-  //       justified: 6363
-  //     },
-  //     february: {
-  //       //...
-  //     }
-  //   }
-  // }];
-  var records = [];
-  var itemModel = {
-    city: '',
-    months: []
-  }
 
   var identifiers = [
     { id: 'Banská Bystrica' },
@@ -76,18 +27,8 @@ function CallcenterService(CallcenterAPIService) {
     return CallcenterAPIService
       .getEmergencyCalls()
       .then(function(response) {
-        // returns new array of arrays for each city
+        // Returns new array of arrays for each city
         return getFilteredArray(response, identifiers);
-      })
-      .then(function(response) {
-        // array mapping to the object used in UI
-        response.forEach(function(record) {
-          record.forEach(function(callcenter) {
-            Object.assign(itemModel, callcenter);
-            console.log('hello', itemModel);
-          });
-        });
-        console.log('hello', response);
       });
   }
 

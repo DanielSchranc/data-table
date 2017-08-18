@@ -1,11 +1,7 @@
-function CallcenterTableController(CallcenterAPIService, StorageService, CallcenterService) {
+function CallcenterTableController(StorageService, CallcenterService) {
   var ctrl = this;
   ctrl.CallsData = [];
-  CallcenterService
-    .getData()
-    .then(function(response) {
-      console.log('ctrl', response);
-    });
+
   function storeCallcenterData(response) {
     ctrl.CallsData = response;
     if (!StorageService.getAll().length) {
@@ -14,9 +10,9 @@ function CallcenterTableController(CallcenterAPIService, StorageService, Callcen
   }
 
   function getCallcenterData() {
-    CallcenterAPIService
-      .getEmergencyCalls()
-      .then(storeCallcenterData);
+    CallcenterService
+    .getData()
+    .then(storeCallcenterData);
   }
 
   function getCallcenterDataFromStorage() {
