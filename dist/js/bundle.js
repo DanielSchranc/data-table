@@ -186,26 +186,6 @@ angular
 }(window.angular));
 (function(angular){
 'use strict';
-var callcenterTableSearch = {
-  templateUrl: './table-search.html',
-  controller: 'CallcenterTableSearchController'
-};
-
-angular
-  .module('components.callcenter')
-  .component('callcenterTableSearch', callcenterTableSearch);}(window.angular));
-(function(angular){
-'use strict';
-function CallcenterTableSearchController() {
-  var ctrl = this;
-  ctrl.searchFilter = '';
-};
-
-angular
-  .module('components.callcenter')
-  .controller('CallcenterTableSearchController', CallcenterTableSearchController);}(window.angular));
-(function(angular){
-'use strict';
 var callcenterTable = {
   templateUrl: './table.html',
   controller: 'CallcenterTableController'
@@ -252,6 +232,26 @@ angular
 }(window.angular));
 (function(angular){
 'use strict';
+var callcenterTableSearch = {
+  templateUrl: './table-search.html',
+  controller: 'CallcenterTableSearchController'
+};
+
+angular
+  .module('components.callcenter')
+  .component('callcenterTableSearch', callcenterTableSearch);}(window.angular));
+(function(angular){
+'use strict';
+function CallcenterTableSearchController() {
+  var ctrl = this;
+  ctrl.searchFilter = '';
+};
+
+angular
+  .module('components.callcenter')
+  .controller('CallcenterTableSearchController', CallcenterTableSearchController);}(window.angular));
+(function(angular){
+'use strict';
 var callcenterTableRow = {
   bindings: {
     cities: '<'
@@ -274,6 +274,9 @@ function CallcenterTableRowController() {
   	});
   	return total;
   }
+  ctrl.deleteItem = function(index) {
+  	ctrl.cities.splice(index, 1);
+  } 
 };
 
 angular
@@ -284,6 +287,6 @@ angular
 'use strict';
 angular.module('templates', []).run(['$templateCache', function($templateCache) {$templateCache.put('./root.html','<div class="root"><header><h1>Emergency calls statistics per year 2016</h1></header><callcenter-table></callcenter-table></div>');
 $templateCache.put('./table.html','<div class="calls-table"><!-- <callcenter-table-search></callcenter-table-search> --><ul class="calls-table__list"><li ng-repeat="cities in $ctrl.CallsData"><callcenter-table-row cities="cities"></callcenter-table-row></li></ul></div>');
-$templateCache.put('./table-row.html','<ul class="calls-table__list--data"><li>City:</li><li>Month:</li><li>Identified:</li><li>Not Identified:</li><li>All:</li><li>Answered:</li><li>Justified:</li></ul><ul ng-repeat="item in $ctrl.cities | filter as filtered" class="calls-table__list--data"><li><span>{{item.Callcentername}}</span></li><li><span>{{item.mesiac}}</span></li><li><span>{{item.Identifikovane}}</span></li><li><span>{{item.Neidentifikovane}}</span></li><li><span>{{item.Vsetky}}</span></li><li><span>{{item.Zdvihnute}}</span></li><li><span>{{item.Opravnene}}</span></li><ul><li></li></ul></ul><ul class="calls-table__list--total"><li>Total per year:</li><li>&nbsp;</li><li>{{$ctrl.getTotal(filtered, \'Identifikovane\')}}</li><li>{{$ctrl.getTotal(filtered, \'Neidentifikovane\')}}</li><li>{{$ctrl.getTotal(filtered, \'Vsetky\')}}</li><li>{{$ctrl.getTotal(filtered, \'Zdvihnute\')}}</li><li>{{$ctrl.getTotal(filtered, \'Opravnene\')}}</li></ul>');
+$templateCache.put('./table-row.html','<ul class="calls-table__list--data"><li style="margin-right: 16px; width: auto"></li><li>City:</li><li>Month:</li><li>Identified:</li><li>Not Identified:</li><li>All:</li><li>Answered:</li><li>Justified:</li></ul><ul ng-repeat="item in $ctrl.cities | filter as filtered" class="calls-table__list--data"><li class="calls-table__delete" ng-click="$ctrl.deleteItem($index);">x</li><li><span>{{item.Callcentername}}</span></li><li><span>{{item.mesiac}}</span></li><li><span>{{item.Identifikovane}}</span></li><li><span>{{item.Neidentifikovane}}</span></li><li><span>{{item.Vsetky}}</span></li><li><span>{{item.Zdvihnute}}</span></li><li><span>{{item.Opravnene}}</span></li><ul><li></li></ul></ul><ul class="calls-table__list--total"><li style="margin-right: 16px; width: auto"></li><li>Total per year:</li><li>&nbsp;</li><li>{{$ctrl.getTotal(filtered, \'Identifikovane\')}}</li><li>{{$ctrl.getTotal(filtered, \'Neidentifikovane\')}}</li><li>{{$ctrl.getTotal(filtered, \'Vsetky\')}}</li><li>{{$ctrl.getTotal(filtered, \'Zdvihnute\')}}</li><li>{{$ctrl.getTotal(filtered, \'Opravnene\')}}</li></ul>');
 $templateCache.put('./table-search.html','<div class="calls-table__search"><label>Type and search <input type="text" placeholder="Search city" ng-model="searchFilter"></label></div>');}]);}(window.angular));
 //# sourceMappingURL=bundle.js.map

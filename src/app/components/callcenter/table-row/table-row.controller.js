@@ -7,6 +7,9 @@ function CallcenterTableRowController() {
   	});
   	return total;
   }
+  ctrl.deleteItem = function(index) {
+  	ctrl.cities.splice(index, 1);
+  } 
 };
 
 angular

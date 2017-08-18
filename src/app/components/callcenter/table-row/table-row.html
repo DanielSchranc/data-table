@@ -1,4 +1,5 @@
 <ul class="calls-table__list--data">
+	<li style="margin-right: 16px; width: auto;"></li>
 	<li>City:</li>
 	<li>Month:</li>
 	<li>Identified:</li>
@@ -9,6 +10,8 @@
 </ul>
 <ul ng-repeat="item in $ctrl.cities | filter as filtered" 
     class="calls-table__list--data">
+  <li class="calls-table__delete" 
+  		ng-click="$ctrl.deleteItem($index);">x</li>
   <li><span>{{item.Callcentername}}</span></li>
   <li><span>{{item.mesiac}}</span></li>
   <li><span>{{item.Identifikovane}}</span></li>
@@ -21,6 +24,7 @@
   </ul>
 </ul>
 <ul class="calls-table__list--total">
+	<li style="margin-right: 16px; width: auto;"></li>
 	<li>Total per year:</li>
 	<li>&nbsp;</li>
 	<li>{{$ctrl.getTotal(filtered, 'Identifikovane')}}</li>

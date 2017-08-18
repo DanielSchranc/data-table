@@ -32,7 +32,11 @@ header {
 .calls-table {
   background: $dark-grey;
 }
-
+.calls-table__delete {
+  margin-right: 1em;
+  color: $fuchsia;
+  cursor: pointer;
+}
 .calls-table__list {
   display: flex;
   flex-direction: column;
@@ -75,7 +79,9 @@ header {
   flex-direction: row;
   justify-content: space-around;
   &>li {
-    width: 15%;
+    &:not(.calls-table__delete) {
+      width: 15%;
+    }
     span {
       color: $lime;
     }
