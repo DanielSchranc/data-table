@@ -1,6 +1,17 @@
 <div class="calls-table__search">
 	<label>
 		Type and search
-		<input type="text" placeholder="Search city" ng-model="searchFilter">
+		<input 
+      type="text" 
+      placeholder="Search city" 
+      ng-model="$ctrl.city"
+      ng-model-options="{
+              'updateOn': 'default blur',
+              'debounce': {
+                'default': 250,
+                'blur': 0
+              }
+            }"
+      ng-change="$ctrl.updateCityResults($ctrl.city)">
 	</label>
 </div>

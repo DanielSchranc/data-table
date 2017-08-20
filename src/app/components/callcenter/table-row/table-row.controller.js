@@ -1,16 +1,19 @@
-function CallcenterTableRowController() {
+function CallcenterTableRowController($filter) {
   var ctrl = this;
-  ctrl.getTotal = function(array, key) {
-  	var total = 0;
-  	array.forEach(function(item) {
-  		total += parseInt(item[key]);
-  	});
-  	return total;
+
+  ctrl.$onInit = function() {
+    ctrl.cities = ctrl.cities;
+    ctrl.totalCallsFilter = $filter('totalCallsFilter');
   }
+
+  ctrl.getTotal = function(key) {
+    return ctrl.totalCallsFilter(ctrl.cities, key);
+  }
+
   ctrl.deleteItem = function(index) {
-  	ctrl.cities.splice(index, 1);
-  } 
-};
+    ctrl.cities.splice(index, 1);
+  }
+}
 
 angular
   .module('components.callcenter')

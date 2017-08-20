@@ -1,4 +1,7 @@
 var callcenterTableSearch = {
+  bindings: {
+    onUpdateResults: '&'
+  },
   templateUrl: './table-search.html',
   controller: 'CallcenterTableSearchController'
 };

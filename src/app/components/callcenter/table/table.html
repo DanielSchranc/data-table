@@ -1,8 +1,12 @@
 <div class="calls-table">
-<!-- <callcenter-table-search></callcenter-table-search> -->
+  <callcenter-table-search
+    on-update-results="$ctrl.updateResults($event)">
+  </callcenter-table-search>
   <ul class="calls-table__list">
-    <li ng-repeat="cities in $ctrl.CallsData">
-      <callcenter-table-row cities="cities"></callcenter-table-row>
+    <li ng-repeat="cities in $ctrl.filteredCities track by $index">
+      <callcenter-table-row 
+        cities="cities">
+      </callcenter-table-row>
     </li>
   </ul>
 </div>

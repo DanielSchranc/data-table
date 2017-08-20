@@ -1,9 +1,15 @@
-function CallcenterTableController(StorageService, CallcenterService) {
+function CallcenterTableController(StorageService, CallcenterService, $filter) {
   var ctrl = this;
   ctrl.CallsData = [];
 
+  ctrl.$onInit = function() {
+    ctrl.tableSearchFilter = $filter('tableSearchFilter');
+  }
+
   function storeCallcenterData(response) {
     ctrl.CallsData = response;
+    ctrl.filteredCities = ctrl.CallsData;
+    console.log(ctrl.filteredCities);
     if (!StorageService.getAll().length) {
       StorageService.add(ctrl.CallsData);
     }
@@ -11,8 +17,8 @@ function CallcenterTableController(StorageService, CallcenterService) {
 
   function getCallcenterData() {
     CallcenterService
-    .getData()
-    .then(storeCallcenterData);
+      .getData()
+      .then(storeCallcenterData);
   }
 
   function getCallcenterDataFromStorage() {
@@ -24,6 +30,10 @@ function CallcenterTableController(StorageService, CallcenterService) {
   }
 
   getCallcenterDataFromStorage();
+
+  ctrl.updateResults = function(event) {
+    ctrl.filteredCities = ctrl.tableSearchFilter(ctrl.CallsData, event.city);
+  }
 
 };
 

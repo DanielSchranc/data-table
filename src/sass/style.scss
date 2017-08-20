@@ -23,20 +23,43 @@ li {
   padding: 0;
   list-style-type: none;
 }
+
 header {
   h1 {
     color: $orange-hi;
     font-weight: 100;
   }
 }
+
 .calls-table {
   background: $dark-grey;
 }
+
+.calls-table__search {
+  padding: 1.5em 2em;
+  input {
+    color: $lime;
+    margin-left: 1.5em;
+    padding: 1em;
+    width: 40%;
+    border: 0px;
+    border-radius: 0.3em;
+    background-color: $black;
+    &::placeholder {
+      color: $orange;
+    }
+  }
+  label {
+    color: $orange;
+  }
+}
+
 .calls-table__delete {
   margin-right: 1em;
   color: $fuchsia;
   cursor: pointer;
 }
+
 .calls-table__list {
   display: flex;
   flex-direction: column;

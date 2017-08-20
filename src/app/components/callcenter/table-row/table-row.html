@@ -8,10 +8,10 @@
 	<li>Answered: </li>
 	<li>Justified:</li>
 </ul>
-<ul ng-repeat="item in $ctrl.cities | filter as filtered" 
+<ul ng-repeat="item in $ctrl.cities" 
     class="calls-table__list--data">
   <li class="calls-table__delete" 
-  		ng-click="$ctrl.deleteItem($index);">x</li>
+  	  ng-click="$ctrl.deleteItem($index);">x</li>
   <li><span>{{item.Callcentername}}</span></li>
   <li><span>{{item.mesiac}}</span></li>
   <li><span>{{item.Identifikovane}}</span></li>
@@ -27,9 +27,9 @@
 	<li style="margin-right: 16px; width: auto;"></li>
 	<li>Total per year:</li>
 	<li>&nbsp;</li>
-	<li>{{$ctrl.getTotal(filtered, 'Identifikovane')}}</li>
-	<li>{{$ctrl.getTotal(filtered, 'Neidentifikovane')}}</li>
-	<li>{{$ctrl.getTotal(filtered, 'Vsetky')}}</li>
-	<li>{{$ctrl.getTotal(filtered, 'Zdvihnute')}}</li>
-	<li>{{$ctrl.getTotal(filtered, 'Opravnene')}}</li>
+	<li>{{$ctrl.getTotal('Identifikovane')}}</li>
+	<li>{{$ctrl.getTotal('Neidentifikovane')}}</li>
+	<li>{{$ctrl.getTotal('Vsetky')}}</li>
+	<li>{{$ctrl.getTotal('Zdvihnute')}}</li>
+	<li>{{$ctrl.getTotal('Opravnene')}}</li>
 </ul>
