@@ -9,7 +9,6 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
   function storeCallcenterData(response) {
     ctrl.CallsData = response;
     ctrl.filteredCities = ctrl.CallsData;
-    console.log(ctrl.filteredCities);
     if (!StorageService.getAll().length) {
       StorageService.add(ctrl.CallsData);
     }

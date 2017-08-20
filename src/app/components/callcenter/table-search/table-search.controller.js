@@ -12,15 +12,7 @@ function CallcenterTableSearchController($filter) {
       }
     });
   }
-
-  // ctrl.$onChanges = function(changes) {
-  //   console.log(changes);
-  // }
-
-  // ctrl.updateResults = function(city) {
-  //   ctrl.tableSearchFilter(city);
-  //   console.log(model);
-  // }
+  
 };
 
 angular
