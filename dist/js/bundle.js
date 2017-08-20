@@ -208,7 +208,6 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
   function storeCallcenterData(response) {
     ctrl.CallsData = response;
     ctrl.filteredCities = ctrl.CallsData;
-    console.log(ctrl.filteredCities);
     if (!StorageService.getAll().length) {
       StorageService.add(ctrl.CallsData);
     }
@@ -307,30 +306,21 @@ angular
   .component('callcenterTableSearch', callcenterTableSearch);}(window.angular));
 (function(angular){
 'use strict';
-CallcenterTableSearchController.$inject = ["$filter"];
-function CallcenterTableSearchController($filter) {
+function CallcenterTableSearchController() {
   var ctrl = this;
 
   ctrl.$onInit = function() {
     ctrl.city = '';
   }
 
-  ctrl.updateCityResults = function(event) {
+  ctrl.updateCityResults = function(city) {
     ctrl.onUpdateResults({
       $event: {
-        city: event
+        city: city
       }
     });
   }
 
-  // ctrl.$onChanges = function(changes) {
-  //   console.log(changes);
-  // }
-
-  // ctrl.updateResults = function(city) {
-  //   ctrl.tableSearchFilter(city);
-  //   console.log(model);
-  // }
 };
 
 angular
@@ -354,6 +344,7 @@ function tableSearchFilter() {
     return newArray;
   }
 }
+
 angular
   .module('components.callcenter')
   .filter('tableSearchFilter', tableSearchFilter);
@@ -361,7 +352,7 @@ angular
 (function(angular){
 'use strict';
 angular.module('templates', []).run(['$templateCache', function($templateCache) {$templateCache.put('./root.html','<div class="root"><header><h1>Emergency calls statistics per year 2016</h1></header><callcenter-table></callcenter-table></div>');
+$templateCache.put('./table-row.html','<div class="calls-table__row" ng-class="{ \'pad--0\': !$ctrl.cities.length }"><ul class="calls-table__list--data pad--b" ng-hide="!$ctrl.cities.length"><li style="margin-right: 16px; width: auto"></li><li>City:</li><li>Month:</li><li>Identified:</li><li>Not Identified:</li><li>All:</li><li>Answered:</li><li>Justified:</li></ul><ul ng-repeat="item in $ctrl.cities" class="calls-table__list--data"><li class="calls-table__delete" ng-click="$ctrl.deleteItem($index);">x</li><li><span>{{item.Callcentername}}</span></li><li><span>{{item.mesiac}}</span></li><li><span>{{item.Identifikovane}}</span></li><li><span>{{item.Neidentifikovane}}</span></li><li><span>{{item.Vsetky}}</span></li><li><span>{{item.Zdvihnute}}</span></li><li><span>{{item.Opravnene}}</span></li><ul><li></li></ul></ul><ul class="calls-table__list--total" ng-hide="!$ctrl.cities.length"><li style="margin-right: 16px; width: auto"></li><li>Total per year:</li><li>&nbsp;</li><li>{{$ctrl.getTotal(\'Identifikovane\')}}</li><li>{{$ctrl.getTotal(\'Neidentifikovane\')}}</li><li>{{$ctrl.getTotal(\'Vsetky\')}}</li><li>{{$ctrl.getTotal(\'Zdvihnute\')}}</li><li>{{$ctrl.getTotal(\'Opravnene\')}}</li></ul></div>');
 $templateCache.put('./table.html','<div class="calls-table"><callcenter-table-search on-update-results="$ctrl.updateResults($event)"></callcenter-table-search><ul class="calls-table__list"><li ng-repeat="cities in $ctrl.filteredCities track by $index"><callcenter-table-row cities="cities"></callcenter-table-row></li></ul></div>');
-$templateCache.put('./table-row.html','<ul class="calls-table__list--data"><li style="margin-right: 16px; width: auto"></li><li>City:</li><li>Month:</li><li>Identified:</li><li>Not Identified:</li><li>All:</li><li>Answered:</li><li>Justified:</li></ul><ul ng-repeat="item in $ctrl.cities" class="calls-table__list--data"><li class="calls-table__delete" ng-click="$ctrl.deleteItem($index);">x</li><li><span>{{item.Callcentername}}</span></li><li><span>{{item.mesiac}}</span></li><li><span>{{item.Identifikovane}}</span></li><li><span>{{item.Neidentifikovane}}</span></li><li><span>{{item.Vsetky}}</span></li><li><span>{{item.Zdvihnute}}</span></li><li><span>{{item.Opravnene}}</span></li><ul><li></li></ul></ul><ul class="calls-table__list--total"><li style="margin-right: 16px; width: auto"></li><li>Total per year:</li><li>&nbsp;</li><li>{{$ctrl.getTotal(\'Identifikovane\')}}</li><li>{{$ctrl.getTotal(\'Neidentifikovane\')}}</li><li>{{$ctrl.getTotal(\'Vsetky\')}}</li><li>{{$ctrl.getTotal(\'Zdvihnute\')}}</li><li>{{$ctrl.getTotal(\'Opravnene\')}}</li></ul>');
 $templateCache.put('./table-search.html','<div class="calls-table__search"><label>Type and search <input type="text" placeholder="Search city" ng-model="$ctrl.city" ng-model-options="{\n              \'updateOn\': \'default blur\',\n              \'debounce\': {\n                \'default\': 250,\n                \'blur\': 0\n              }\n            }" ng-change="$ctrl.updateCityResults($ctrl.city)"></label></div>');}]);}(window.angular));
 //# sourceMappingURL=bundle.js.map

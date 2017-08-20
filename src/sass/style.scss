@@ -65,11 +65,8 @@ header {
   flex-direction: column;
   justify-content: center;
   &>li {
-    padding: 1em;
     color: $aqua;
-    &:nth-child(1n) {
-      border-bottom: 1px solid $olive;
-    }
+    
     &:nth-child(1) {
       color: $aqua;
     }
@@ -97,11 +94,16 @@ header {
   }
 }
 
+.calls-table__row {
+  padding: 1em;
+}
+
 .calls-table__list--data {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   &>li {
+    padding: 0;
     &:not(.calls-table__delete) {
       width: 15%;
     }
@@ -113,4 +115,25 @@ header {
 
 .calls-table__list--total {
   @extend .calls-table__list--data;
+  padding-top: 1em;
+  padding-bottom: 2em;
+  border-bottom: 1px solid $olive;
+  &:nth-child(1n) {
+      
+    }
 }
+
+// Helpers
+
+.pad--b {
+  padding-bottom: 1em;
+}
+
+.pad--t {
+  padding-top: 1em;
+}
+
+.pad--0 {
+  padding: 0;
+}
+

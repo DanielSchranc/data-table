@@ -13,6 +13,7 @@ function tableSearchFilter() {
     return newArray;
   }
 }
+
 angular
   .module('components.callcenter')
   .filter('tableSearchFilter', tableSearchFilter);

@@ -1,18 +1,18 @@
-function CallcenterTableSearchController($filter) {
+function CallcenterTableSearchController() {
   var ctrl = this;
 
   ctrl.$onInit = function() {
     ctrl.city = '';
   }
 
-  ctrl.updateCityResults = function(event) {
+  ctrl.updateCityResults = function(city) {
     ctrl.onUpdateResults({
       $event: {
-        city: event
+        city: city
       }
     });
   }
-  
+
 };
 
 angular
