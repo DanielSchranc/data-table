@@ -1,5 +1,5 @@
 <div class="calls-table">
-  <callcenter-table-search
+  <callcenter-table-search 
     on-update-results="$ctrl.updateResults($event)">
   </callcenter-table-search>
   <ul class="calls-table__list">
@@ -7,6 +7,20 @@
       <callcenter-table-row 
         cities="cities">
       </callcenter-table-row>
+      
+    </li>
+    <li ng-show="!$ctrl.filteredCities.length">
+      <p class="loading pad--l pad--b">
+        Loading data 🚀...
+      </p>
+    </li>
+    <li>
+      <p 
+        ng-show="$ctrl.showNoResultsMsg" 
+        class="no__results pad--l pad--b">
+        Sorry no results 😭 for such query. 
+        Pls, search for cities 🏤 only 😊👌.
+      </p>
     </li>
   </ul>
 </div>

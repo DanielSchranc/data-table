@@ -1,5 +1,6 @@
 function tableSearchFilter() {
   return function(collection, param) {
+
     if (!param) return collection;
 
     var newArray = [];

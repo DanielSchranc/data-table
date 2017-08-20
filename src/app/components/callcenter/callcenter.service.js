@@ -24,16 +24,23 @@ function CallcenterService(CallcenterAPIService) {
   }
 
   var getTransformedData = function() {
-      return CallcenterAPIService
-        .getEmergencyCalls()
-        .then(function(response) {
-          // Returns new array of arrays for each city
-          return getFilteredArray(response, identifiers);
-        });
-    }
+    return CallcenterAPIService
+      .getEmergencyCalls()
+      .then(function(response) {
+        // Returns new array of arrays for each city
+        return getFilteredArray(response, identifiers);
+    });
+  }
+
+  var checkEachItemLength = function(array) {
+    return array.every(function(element) {
+      return !element.length;
+    });
+  }
 
   return {
-    getData: getTransformedData
+    getData: getTransformedData,
+    showMsg: checkEachItemLength
   }
 }
 

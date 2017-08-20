@@ -1,6 +1,7 @@
 function CallcenterTableController(StorageService, CallcenterService, $filter) {
   var ctrl = this;
   ctrl.CallsData = [];
+  ctrl.showNoResultsMsg = false;
 
   ctrl.$onInit = function() {
     ctrl.tableSearchFilter = $filter('tableSearchFilter');
@@ -32,6 +33,7 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
 
   ctrl.updateResults = function(event) {
     ctrl.filteredCities = ctrl.tableSearchFilter(ctrl.CallsData, event.city);
+    ctrl.showNoResultsMsg = CallcenterService.showMsg(ctrl.filteredCities);
   }
 
 };
