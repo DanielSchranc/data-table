@@ -6,10 +6,10 @@ self.addEventListener('install', function(event) {
       .then(function(cache) {
         return cache.addAll([
           '/index.html',
-          '/css/style.css',
-          '/js/vendor.js',
-          '/js/bundle.js',
-          '/img/favicon.ico'
+          '/dist/css/style.css',
+          '/dist/js/vendor.js',
+          '/dist/js/bundle.js',
+          '/dist/img/favicon.ico'
       ]);
     })
   );
