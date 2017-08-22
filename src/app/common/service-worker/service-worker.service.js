@@ -2,7 +2,6 @@ function ServiceWorkerService() {
 
   this.checkServiceWorker = function() {
     if ('serviceWorker' in navigator) {
-      //navigator.serviceWorker.register('/service-worker.js');
       return true;
     }
     return false;
