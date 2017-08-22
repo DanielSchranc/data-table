@@ -5,11 +5,12 @@ self.addEventListener('install', function(event) {
       .open('v1')
       .then(function(cache) {
         return cache.addAll([
-          '/index.html',
-          '/dist/css/style.css',
-          '/dist/js/vendor.js',
-          '/dist/js/bundle.js',
-          '/dist/img/favicon.ico'
+          '/data-table/',
+          '/data-table/index.html',
+          '/data-table/dist/css/style.css',
+          '/data-table/dist/js/vendor.js',
+          '/data-table/dist/js/bundle.js',
+          '/data-table/dist/img/favicon.ico'
       ]);
     })
   );

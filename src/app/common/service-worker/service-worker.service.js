@@ -10,7 +10,7 @@ function ServiceWorkerService() {
   this.registerWorker = function(worker) {
     navigator
       .serviceWorker
-      .register(worker)
+      .register(worker, { scope: '/data-table/' })
       .then(function(register) {
         if (register.installing) {
           console.log('Service worker installing');
