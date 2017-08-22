@@ -3,7 +3,8 @@ function ServiceWorkerController(ServiceWorkerService) {
 
   function registerAppInSW() {
     if (ServiceWorkerService.checkServiceWorker) {
-     ServiceWorkerService.registerWorker('../sw/service-worker.js');
+     ServiceWorkerService
+      .registerWorker('sw/service-worker.js');
     }
   }
 

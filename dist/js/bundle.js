@@ -9,15 +9,19 @@ angular
 (function(angular){
 'use strict';
 angular
+  .module('common', [
+    'common.sw'
+  ]);}(window.angular));
+(function(angular){
+'use strict';
+angular
   .module('components', [
     'components.callcenter'
   ]);}(window.angular));
 (function(angular){
 'use strict';
 angular
-  .module('common', [
-    'common.sw'
-  ]);}(window.angular));
+  .module('common.sw', []);}(window.angular));
 (function(angular){
 'use strict';
 angular
@@ -72,10 +76,6 @@ angular
 }(window.angular));
 (function(angular){
 'use strict';
-angular
-  .module('common.sw', []);}(window.angular));
-(function(angular){
-'use strict';
 var root = {
   templateUrl: './root.html'
 };
@@ -118,6 +118,69 @@ function StorageService($localStorage) {
 angular
   .module('common')
   .factory('StorageService', StorageService);
+}(window.angular));
+(function(angular){
+'use strict';
+var serviceWorker = {
+  controller: 'ServiceWorkerController'
+};
+
+angular
+  .module('common.sw')
+  .component('serviceWorker', serviceWorker);}(window.angular));
+(function(angular){
+'use strict';
+ServiceWorkerController.$inject = ["ServiceWorkerService"];
+function ServiceWorkerController(ServiceWorkerService) {
+  var ctrl = this;
+
+  function registerAppInSW() {
+    if (ServiceWorkerService.checkServiceWorker) {
+     ServiceWorkerService
+      .registerWorker('sw/service-worker.js');
+    }
+  }
+
+  registerAppInSW();
+}
+
+angular
+  .module('common.sw')
+  .controller('ServiceWorkerController', ServiceWorkerController);}(window.angular));
+(function(angular){
+'use strict';
+function ServiceWorkerService() {
+
+  this.checkServiceWorker = function() {
+    if ('serviceWorker' in navigator) {
+      return true;
+    }
+    return false;
+  }
+
+  this.registerWorker = function(worker) {
+    navigator
+      .serviceWorker
+      .register(worker)
+      .then(function(register) {
+        if (register.installing) {
+          console.log('Service worker installing');
+        } else if (register.waiting) {
+          console.log('Service worker installed');
+        } else if (register.active) {
+          console.log('Service worker active');
+        }
+      })
+      .catch(function(error) {
+        console.log('Registration failed with ' + error);
+      });
+  }
+
+}
+
+angular
+  .module('common.sw')
+  .service('ServiceWorkerService', ServiceWorkerService);
 }(window.angular));
 (function(angular){
 'use strict';
@@ -196,68 +259,6 @@ function CallcenterService(CallcenterAPIService) {
 angular
   .module('components.callcenter')
   .factory('CallcenterService', CallcenterService);
-}(window.angular));
-(function(angular){
-'use strict';
-var serviceWorker = {
-  controller: 'ServiceWorkerController'
-};
-
-angular
-  .module('common.sw')
-  .component('serviceWorker', serviceWorker);}(window.angular));
-(function(angular){
-'use strict';
-ServiceWorkerController.$inject = ["ServiceWorkerService"];
-function ServiceWorkerController(ServiceWorkerService) {
-  var ctrl = this;
-
-  function registerAppInSW() {
-    if (ServiceWorkerService.checkServiceWorker) {
-     ServiceWorkerService.registerWorker('../sw/service-worker.js');
-    }
-  }
-
-  registerAppInSW();
-}
-
-angular
-  .module('common.sw')
-  .controller('ServiceWorkerController', ServiceWorkerController);}(window.angular));
-(function(angular){
-'use strict';
-function ServiceWorkerService() {
-
-  this.checkServiceWorker = function() {
-    if ('serviceWorker' in navigator) {
-      return true;
-    }
-    return false;
-  }
-
-  this.registerWorker = function(worker) {
-    navigator
-      .serviceWorker
-      .register(worker)
-      .then(function(register) {
-        if (register.installing) {
-          console.log('Service worker installing');
-        } else if (register.waiting) {
-          console.log('Service worker installed');
-        } else if (register.active) {
-          console.log('Service worker active');
-        }
-      })
-      .catch(function(error) {
-        console.log('Registration failed with ' + error);
-      });
-  }
-
-}
-
-angular
-  .module('common.sw')
-  .service('ServiceWorkerService', ServiceWorkerService);
 }(window.angular));
 (function(angular){
 'use strict';
@@ -430,7 +431,7 @@ angular
 (function(angular){
 'use strict';
 angular.module('templates', []).run(['$templateCache', function($templateCache) {$templateCache.put('./root.html','<div class="root"><header><h1>Emergency calls statistics per year 2016</h1></header><callcenter-table></callcenter-table><service-worker></service-worker></div>');
-$templateCache.put('./table-row.html','<div class="calls-table__row" ng-class="{ \'pad--0\': !$ctrl.cities.length }"><ul class="calls-table__list--data pad--b" ng-hide="!$ctrl.cities.length"><li style="margin-right: 16px; width: auto"></li><li>City:</li><li>Month:</li><li>Identified:</li><li>Not Identified:</li><li>All:</li><li>Answered:</li><li>Justified:</li></ul><ul ng-repeat="item in $ctrl.cities" class="calls-table__list--data"><li class="calls-table__delete" ng-click="$ctrl.deleteItem($index);">x</li><li><span>{{item.Callcentername}}</span></li><li><span>{{item.mesiac}}</span></li><li><span>{{item.Identifikovane}}</span></li><li><span>{{item.Neidentifikovane}}</span></li><li><span>{{item.Vsetky}}</span></li><li><span>{{item.Zdvihnute}}</span></li><li><span>{{item.Opravnene}}</span></li></ul><ul class="calls-table__list--total" ng-hide="!$ctrl.cities.length"><li style="margin-right: 16px; width: auto"></li><li>Total per year:</li><li>&nbsp;</li><li>{{$ctrl.getTotal(\'Identifikovane\')}}</li><li>{{$ctrl.getTotal(\'Neidentifikovane\')}}</li><li>{{$ctrl.getTotal(\'Vsetky\')}}</li><li>{{$ctrl.getTotal(\'Zdvihnute\')}}</li><li>{{$ctrl.getTotal(\'Opravnene\')}}</li></ul></div>');
 $templateCache.put('./table.html','<div class="calls-table"><callcenter-table-search on-update-results="$ctrl.updateResults($event)"></callcenter-table-search><ul class="calls-table__list"><li ng-repeat="cities in $ctrl.filteredCities track by $index"><callcenter-table-row cities="cities"></callcenter-table-row></li><li ng-show="!$ctrl.filteredCities.length"><p class="loading pad--l pad--b">Loading data \uD83D\uDE80...</p></li><li ng-show="$ctrl.showNoResultsMsg"><p class="no__results pad--l pad--b">Sorry no results \uD83D\uDE2D for such query. Pls, search for cities \uD83C\uDFE4 only \uD83D\uDE0A\uD83D\uDC4C.</p></li></ul></div>');
+$templateCache.put('./table-row.html','<div class="calls-table__row" ng-class="{ \'pad--0\': !$ctrl.cities.length }"><ul class="calls-table__list--data pad--b" ng-hide="!$ctrl.cities.length"><li style="margin-right: 16px; width: auto"></li><li>City:</li><li>Month:</li><li>Identified:</li><li>Not Identified:</li><li>All:</li><li>Answered:</li><li>Justified:</li></ul><ul ng-repeat="item in $ctrl.cities" class="calls-table__list--data"><li class="calls-table__delete" ng-click="$ctrl.deleteItem($index);">x</li><li><span>{{item.Callcentername}}</span></li><li><span>{{item.mesiac}}</span></li><li><span>{{item.Identifikovane}}</span></li><li><span>{{item.Neidentifikovane}}</span></li><li><span>{{item.Vsetky}}</span></li><li><span>{{item.Zdvihnute}}</span></li><li><span>{{item.Opravnene}}</span></li></ul><ul class="calls-table__list--total" ng-hide="!$ctrl.cities.length"><li style="margin-right: 16px; width: auto"></li><li>Total per year:</li><li>&nbsp;</li><li>{{$ctrl.getTotal(\'Identifikovane\')}}</li><li>{{$ctrl.getTotal(\'Neidentifikovane\')}}</li><li>{{$ctrl.getTotal(\'Vsetky\')}}</li><li>{{$ctrl.getTotal(\'Zdvihnute\')}}</li><li>{{$ctrl.getTotal(\'Opravnene\')}}</li></ul></div>');
 $templateCache.put('./table-search.html','<div class="calls-table__search"><label>Type and search <input type="text" placeholder="Search city" ng-model="$ctrl.city" ng-model-options="{\n              \'updateOn\': \'default blur\',\n              \'debounce\': {\n                \'default\': 250,\n                \'blur\': 0\n              }\n            }" ng-change="$ctrl.updateCityResults($ctrl.city)"></label></div>');}]);}(window.angular));
 //# sourceMappingURL=bundle.js.map
