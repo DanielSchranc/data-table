@@ -29,7 +29,7 @@ const paths = {
   ],
   static: [
     `${root}/index.html`,
-    `${root}/sw/service-worker.js`,
+    `${root}/service-worker.js`,
     `${root}/fonts/**/*`,
     `${root}/img/**/*`
   ]

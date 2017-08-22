@@ -137,7 +137,7 @@ function ServiceWorkerController(ServiceWorkerService) {
   function registerAppInSW() {
     if (ServiceWorkerService.checkServiceWorker) {
      ServiceWorkerService
-      .registerWorker('sw/service-worker.js');
+      .registerWorker('service-worker.js');
     }
   }
 
