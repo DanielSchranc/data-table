@@ -1,2 +1,4 @@
 angular
-  .module('common', []);
+  .module('common', [
+    'common.sw'
+  ]);
