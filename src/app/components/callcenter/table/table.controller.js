@@ -11,7 +11,7 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
     ctrl.CallsData = response;
     ctrl.filteredCities = ctrl.CallsData;
     if (!StorageService.getAll().length) {
-      StorageService.add(ctrl.CallsData);
+      StorageService.add(ctrl.filteredCities);
     }
   }
 
@@ -25,7 +25,7 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
     if (navigator.onLine) {
       getCallcenterData();
     } else {
-      ctrl.CallsData = StorageService.getAll();
+      ctrl.filteredCities = StorageService.getAll();
     }
   }
 
