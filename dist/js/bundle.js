@@ -288,9 +288,14 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
   var ctrl = this;
   ctrl.CallsData = [];
   ctrl.showNoResultsMsg = false;
-
+  ctrl.isOnline = checkAppOnline();
+  
   ctrl.$onInit = function() {
     ctrl.tableSearchFilter = $filter('tableSearchFilter');
+  }
+
+  function checkAppOnline() {
+    return navigator.onLine;
   }
 
   function storeCallcenterData(response) {
@@ -322,7 +327,7 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
   }
 
   function getCallcenterDataFromStorage() {
-    if (navigator.onLine) {
+    if (ctrl.isOnline) {
       getCallcenterData();
     } else {
       getDataFromLocalStorage();
@@ -330,9 +335,10 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
   }
 
   getCallcenterDataFromStorage();
-
+  console.log('table', ctrl.isOnline)
   ctrl.updateResults = function(event) {
-    ctrl.filteredCities = ctrl.tableSearchFilter(ctrl.CallsData, event.city);
+    var array = ctrl.isOnline ? ctrl.CallsData : ctrl.filteredCities;
+    ctrl.filteredCities = ctrl.tableSearchFilter(array, event.city);
     ctrl.showNoResultsMsg = CallcenterService.showMsg(ctrl.filteredCities);
   }
 }
@@ -340,58 +346,6 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
 angular
   .module('components.callcenter')
   .controller('CallcenterTableController', CallcenterTableController);
-}(window.angular));
-(function(angular){
-'use strict';
-function totalCallsFilter() {
-  return function(collection, param) {
-    var total = 0;
-    collection.forEach(function(item) {
-      total += parseInt(item[param]);
-    });
-    return total;
-  }
-}
-
-angular
-  .module('components.callcenter')
-  .filter('totalCallsFilter', totalCallsFilter);}(window.angular));
-(function(angular){
-'use strict';
-var callcenterTableRow = {
-  bindings: {
-    cities: '<'
-  },
-  templateUrl: './table-row.html',
-  controller: 'CallcenterTableRowController'
-};
-
-angular
-  .module('components.callcenter')
-  .component('callcenterTableRow', callcenterTableRow);}(window.angular));
-(function(angular){
-'use strict';
-CallcenterTableRowController.$inject = ["$filter"];
-function CallcenterTableRowController($filter) {
-  var ctrl = this;
-
-  ctrl.$onInit = function() {
-    ctrl.cities = ctrl.cities;
-    ctrl.totalCallsFilter = $filter('totalCallsFilter');
-  }
-
-  ctrl.getTotal = function(key) {
-    return ctrl.totalCallsFilter(ctrl.cities, key);
-  }
-
-  ctrl.deleteItem = function(index) {
-    ctrl.cities.splice(index, 1);
-  }
-}
-
-angular
-  .module('components.callcenter')
-  .controller('CallcenterTableRowController', CallcenterTableRowController);
 }(window.angular));
 (function(angular){
 'use strict';
@@ -451,6 +405,58 @@ function tableSearchFilter() {
 angular
   .module('components.callcenter')
   .filter('tableSearchFilter', tableSearchFilter);
+}(window.angular));
+(function(angular){
+'use strict';
+function totalCallsFilter() {
+  return function(collection, param) {
+    var total = 0;
+    collection.forEach(function(item) {
+      total += parseInt(item[param]);
+    });
+    return total;
+  }
+}
+
+angular
+  .module('components.callcenter')
+  .filter('totalCallsFilter', totalCallsFilter);}(window.angular));
+(function(angular){
+'use strict';
+var callcenterTableRow = {
+  bindings: {
+    cities: '<'
+  },
+  templateUrl: './table-row.html',
+  controller: 'CallcenterTableRowController'
+};
+
+angular
+  .module('components.callcenter')
+  .component('callcenterTableRow', callcenterTableRow);}(window.angular));
+(function(angular){
+'use strict';
+CallcenterTableRowController.$inject = ["$filter"];
+function CallcenterTableRowController($filter) {
+  var ctrl = this;
+
+  ctrl.$onInit = function() {
+    ctrl.cities = ctrl.cities;
+    ctrl.totalCallsFilter = $filter('totalCallsFilter');
+  }
+
+  ctrl.getTotal = function(key) {
+    return ctrl.totalCallsFilter(ctrl.cities, key);
+  }
+
+  ctrl.deleteItem = function(index) {
+    ctrl.cities.splice(index, 1);
+  }
+}
+
+angular
+  .module('components.callcenter')
+  .controller('CallcenterTableRowController', CallcenterTableRowController);
 }(window.angular));
 (function(angular){
 'use strict';

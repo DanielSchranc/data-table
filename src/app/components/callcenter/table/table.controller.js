@@ -2,9 +2,14 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
   var ctrl = this;
   ctrl.CallsData = [];
   ctrl.showNoResultsMsg = false;
-
+  ctrl.isOnline = checkAppOnline();
+  
   ctrl.$onInit = function() {
     ctrl.tableSearchFilter = $filter('tableSearchFilter');
+  }
+
+  function checkAppOnline() {
+    return navigator.onLine;
   }
 
   function storeCallcenterData(response) {
@@ -36,7 +41,7 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
   }
 
   function getCallcenterDataFromStorage() {
-    if (navigator.onLine) {
+    if (ctrl.isOnline) {
       getCallcenterData();
     } else {
       getDataFromLocalStorage();
@@ -44,9 +49,10 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
   }
 
   getCallcenterDataFromStorage();
-
+  console.log('table', ctrl.isOnline)
   ctrl.updateResults = function(event) {
-    ctrl.filteredCities = ctrl.tableSearchFilter(ctrl.CallsData, event.city);
+    var array = ctrl.isOnline ? ctrl.CallsData : ctrl.filteredCities;
+    ctrl.filteredCities = ctrl.tableSearchFilter(array, event.city);
     ctrl.showNoResultsMsg = CallcenterService.showMsg(ctrl.filteredCities);
   }
 }
