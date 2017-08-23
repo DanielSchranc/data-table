@@ -49,7 +49,7 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
   }
 
   getCallcenterDataFromStorage();
-  console.log('table', ctrl.isOnline)
+  
   ctrl.updateResults = function(event) {
     var array = ctrl.isOnline ? ctrl.CallsData : ctrl.filteredCities;
     ctrl.filteredCities = ctrl.tableSearchFilter(array, event.city);
