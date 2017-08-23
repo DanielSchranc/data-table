@@ -1,4 +1,4 @@
-function StorageService($localStorage) {
+function StorageService($q, $localStorage) {
   $localStorage = $localStorage.$default({
     items: []
   });
@@ -9,7 +9,17 @@ function StorageService($localStorage) {
 
   function getAll() {
     return $localStorage.items;
-  };
+  }
+
+  function getAllAsync() {
+    return $q(function(resolve, reject) {
+      if ($localStorage.items.length) {
+        resolve($localStorage.items);
+      } else {
+        reject($localStorage.items);
+      }
+    });
+  }
 
   function remove(item) {
     $localStorage.items.splice($localStorage.items.indexOf(item), 1);
@@ -23,9 +33,10 @@ function StorageService($localStorage) {
   return {
     add: add,
     getAll: getAll,
+    getAllAsync: getAllAsync,
     remove: remove,
     removeAll: removeAll
-  };
+  }
 }
 angular
   .module('common')

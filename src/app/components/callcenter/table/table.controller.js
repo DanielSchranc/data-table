@@ -15,17 +15,31 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
     }
   }
 
+  function storeDataFromLocalStorage(response) {
+    if (!response) {
+      console.log('No data stored in localStorage');
+      return;
+    }
+    ctrl.filteredCities = response;
+  }
+
   function getCallcenterData() {
     CallcenterService
       .getData()
       .then(storeCallcenterData);
   }
 
+  function getDataFromLocalStorage() {
+    StorageService
+      .getAllAsync()
+      .then(storeDataFromLocalStorage);
+  }
+
   function getCallcenterDataFromStorage() {
     if (navigator.onLine) {
       getCallcenterData();
     } else {
-      ctrl.filteredCities = StorageService.getAll();
+      getDataFromLocalStorage();
     }
   }
 
@@ -35,8 +49,7 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
     ctrl.filteredCities = ctrl.tableSearchFilter(ctrl.CallsData, event.city);
     ctrl.showNoResultsMsg = CallcenterService.showMsg(ctrl.filteredCities);
   }
-
-};
+}
 
 angular
   .module('components.callcenter')

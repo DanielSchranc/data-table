@@ -85,8 +85,8 @@ angular
   .component('root', root);}(window.angular));
 (function(angular){
 'use strict';
-StorageService.$inject = ["$localStorage"];
-function StorageService($localStorage) {
+StorageService.$inject = ["$q", "$localStorage"];
+function StorageService($q, $localStorage) {
   $localStorage = $localStorage.$default({
     items: []
   });
@@ -97,7 +97,17 @@ function StorageService($localStorage) {
 
   function getAll() {
     return $localStorage.items;
-  };
+  }
+
+  function getAllAsync() {
+    return $q(function(resolve, reject) {
+      if ($localStorage.items.length) {
+        resolve($localStorage.items);
+      } else {
+        reject($localStorage.items);
+      }
+    });
+  }
 
   function remove(item) {
     $localStorage.items.splice($localStorage.items.indexOf(item), 1);
@@ -111,9 +121,10 @@ function StorageService($localStorage) {
   return {
     add: add,
     getAll: getAll,
+    getAllAsync: getAllAsync,
     remove: remove,
     removeAll: removeAll
-  };
+  }
 }
 angular
   .module('common')
@@ -290,17 +301,31 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
     }
   }
 
+  function storeDataFromLocalStorage(response) {
+    if (!response) {
+      console.log('No data stored in localStorage');
+      return;
+    }
+    ctrl.filteredCities = response;
+  }
+
   function getCallcenterData() {
     CallcenterService
       .getData()
       .then(storeCallcenterData);
   }
 
+  function getDataFromLocalStorage() {
+    StorageService
+      .getAllAsync()
+      .then(storeDataFromLocalStorage);
+  }
+
   function getCallcenterDataFromStorage() {
     if (navigator.onLine) {
       getCallcenterData();
     } else {
-      ctrl.filteredCities = StorageService.getAll();
+      getDataFromLocalStorage();
     }
   }
 
@@ -310,8 +335,7 @@ function CallcenterTableController(StorageService, CallcenterService, $filter) {
     ctrl.filteredCities = ctrl.tableSearchFilter(ctrl.CallsData, event.city);
     ctrl.showNoResultsMsg = CallcenterService.showMsg(ctrl.filteredCities);
   }
-
-};
+}
 
 angular
   .module('components.callcenter')
